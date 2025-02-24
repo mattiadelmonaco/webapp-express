@@ -1,0 +1,23 @@
+{
+  "name": "webapp-express",
+  "version": "1.0.0",
+  "description": "webapp whit express",
+  "main": "app.js",
+  "scripts": {
+    "start": "node --env-file=.env app.js",
+    "watch": "node --env-file=.env --watch app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mattiadelmonaco/webapp-express.git"
+  },
+  "author": "Mattia Del Monaco",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mattiadelmonaco/webapp-express/issues"
+  },
+  "homepage": "https://github.com/mattiadelmonaco/webapp-express#readme",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

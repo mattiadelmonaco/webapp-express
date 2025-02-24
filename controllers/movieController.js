@@ -18,17 +18,23 @@ const index = (req, res) => {
 // Show
 const show = (req, res) => {
   const { id } = req.params;
-  const sql = `
+  const movieSql = `
     SELECT * 
     FROM movies
     WHERE movies.id = ?`;
 
-  connection.execute(sql, [id], (err, results) => {
+  const reviewsSql = `
+    SELECT * 
+    FROM movies
+    JOIN reviews ON reviews.movie_id = movies.id
+    WHERE movies.id = ?`;
+
+  connection.execute(movieSql, [id], (err, results) => {
     if (err) {
       return res.status(500).json({
         status: 500,
         error: "Internal server error",
-        message: `Wrong Query (${sql})`,
+        message: `Wrong Query (${movieSql})`,
       });
     }
     const movie = results[0];
@@ -41,7 +47,17 @@ const show = (req, res) => {
       });
     }
 
-    res.json(movie);
+    connection.execute(reviewsSql, [id], (err, results) => {
+      if (err) {
+        return res.status(500).json({
+          status: 500,
+          error: "Internal server error",
+          message: `Wrong Query (${reviewsSql})`,
+        });
+      }
+      movie.reviews = results;
+      res.json(movie);
+    });
   });
 };
 

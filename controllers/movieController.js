@@ -2,7 +2,12 @@ const connection = require("../data/db");
 
 // Index
 const index = (req, res) => {
-  const sql = "SELECT * FROM movies";
+  const sql = `
+    SELECT movies.*, ROUND(AVG(reviews.vote),1) AS average_vote
+    FROM movies
+    LEFT JOIN reviews ON reviews.movie_id = movies.id 
+    GROUP BY movies.id`;
+
   connection.execute(sql, (err, results) => {
     if (err) {
       return res.status(500).json({
@@ -18,6 +23,7 @@ const index = (req, res) => {
 // Show
 const show = (req, res) => {
   const { id } = req.params;
+
   const movieSql = `
     SELECT * 
     FROM movies
@@ -37,6 +43,7 @@ const show = (req, res) => {
         message: `Wrong Query (${movieSql})`,
       });
     }
+
     const movie = results[0];
 
     if (!movie) {
@@ -55,6 +62,7 @@ const show = (req, res) => {
           message: `Wrong Query (${reviewsSql})`,
         });
       }
+
       movie.reviews = results;
       res.json(movie);
     });

@@ -7,13 +7,13 @@ const moviesRouter = require("./routers/moviesRouter");
 const notFound = require("./middlewares/notFound");
 const errorsHandler = require("./middlewares/errorsHandler");
 
-app.use(express.static("public"));
-app.use(express.json());
 app.use(
   cors({
     origin: process.env.FE_URL,
   })
 );
+app.use(express.static("public"));
+app.use(express.json());
 
 app.use("/movies", moviesRouter);
 

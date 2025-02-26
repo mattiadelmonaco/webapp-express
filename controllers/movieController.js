@@ -51,6 +51,7 @@ const show = (req, res) => {
     }
 
     const movie = results[0];
+    movie.image = `${process.env.BE_URL}/movies_cover/${movie.image}`;
 
     if (!movie) {
       return res.status(404).json({

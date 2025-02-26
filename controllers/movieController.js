@@ -18,7 +18,7 @@ const index = (req, res) => {
     }
 
     const moviesList = results.map((movie) => {
-      movie.image = `http://localhost:3000/movies_cover/${movie.title}.jpg`;
+      movie.image = `${process.env.BE_URL}/movies_cover/${movie.image}`;
       return movie;
     });
 

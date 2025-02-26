@@ -16,7 +16,13 @@ const index = (req, res) => {
         message: `Wrong Query (${sql})`,
       });
     }
-    res.json(results);
+
+    const moviesList = results.map((movie) => {
+      movie.image = `http://localhost:3000/movies_cover/${movie.title}.jpg`;
+      return movie;
+    });
+
+    res.json(moviesList);
   });
 };
 

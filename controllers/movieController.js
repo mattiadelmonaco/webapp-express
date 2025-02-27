@@ -103,4 +103,33 @@ const createReview = (req, res) => {
   });
 };
 
-module.exports = { index, show, createReview };
+// Create Movie
+const createMovie = (req, res) => {
+  const image = req.file.filename;
+  console.log(req.file.filename);
+  console.log(req.body);
+
+  const { title, director, genre, release_year, abstract } = req.body;
+
+  const sql = `INSERT INTO movies (title, director, genre, release_year, abstract, image) VALUES (?, ?, ?, ?, ?, ?)`;
+
+  connection.execute(
+    sql,
+    [title, director, genre, release_year, abstract, image],
+    (err, results) => {
+      if (err) {
+        return res.status(500).json({
+          status: 500,
+          error: "Internal server error",
+          message: `Wrong Query (${sql})`,
+        });
+      }
+      res.status(201).json({
+        status: 201,
+        message: "Movie added",
+      });
+    }
+  );
+};
+
+module.exports = { index, show, createReview, createMovie };

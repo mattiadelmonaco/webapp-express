@@ -88,7 +88,6 @@ const createReview = (req, res) => {
   const sql = `INSERT INTO reviews (movie_id, name, text, vote) VALUES (?, ?, ?, ?)`;
 
   connection.execute(sql, [id, name, text, vote], (err, results) => {
-    console.log(req.body);
     if (err) {
       return res.status(500).json({
         status: 500,

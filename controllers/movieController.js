@@ -79,4 +79,29 @@ const show = (req, res) => {
   });
 };
 
-module.exports = { index, show };
+// Create Review
+const createReview = (req, res) => {
+  const { id } = req.params;
+
+  const { name, vote, text } = req.body;
+
+  const sql = `INSERT INTO reviews (movie_id, name, text, vote) VALUES (?, ?, ?, ?)`;
+
+  connection.execute(sql, [id, name, text, vote], (err, results) => {
+    console.log(req.body);
+    if (err) {
+      return res.status(500).json({
+        status: 500,
+        error: "Internal server error",
+        message: `Wrong Query (${sql})`,
+      });
+    }
+
+    res.status(201).json({
+      status: 201,
+      message: "Review added",
+    });
+  });
+};
+
+module.exports = { index, show, createReview };

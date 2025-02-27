@@ -124,6 +124,7 @@ const createMovie = (req, res) => {
           message: `Wrong Query (${sql})`,
         });
       }
+
       res.status(201).json({
         status: 201,
         message: "Movie added",

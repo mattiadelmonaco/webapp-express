@@ -106,12 +106,13 @@ const createReview = (req, res) => {
 // Create Movie
 const createMovie = (req, res) => {
   const image = req.file.filename;
-  console.log(req.file.filename);
-  console.log(req.body);
+  // console.log(req.body);
 
   const { title, director, genre, release_year, abstract } = req.body;
 
   const sql = `INSERT INTO movies (title, director, genre, release_year, abstract, image) VALUES (?, ?, ?, ?, ?, ?)`;
+
+  console.log([title, director, genre, release_year, abstract, image]);
 
   connection.execute(
     sql,
